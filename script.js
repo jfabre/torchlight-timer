@@ -97,28 +97,10 @@
   }
 
   // ── Timer logic ──────────────────────────────────────────────────
-  let hiddenAt = null; // wall-clock ms when page was hidden
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      hiddenAt = Date.now();
-    } else if (hiddenAt !== null && running) {
-      const elapsed = Math.floor((Date.now() - hiddenAt) / 1000);
-      hiddenAt = null;
-      if (elapsed > 0) {
-        remaining = Math.max(0, remaining - elapsed);
-        renderTimer();
-        renderState();
-      }
-    } else {
-      hiddenAt = null;
-    }
-  });
-
   function startTick() {
     if (tickInterval) return;
     tickInterval = setInterval(() => {
-      if (!running || document.hidden) return;
+      if (!running) return;
       remaining = Math.max(0, remaining - 1);
       renderTimer();
       renderState();
