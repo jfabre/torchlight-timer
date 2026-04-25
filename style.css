@@ -43,8 +43,7 @@ html, body {
 
 /* ── Timer screen ─────────────────────────────────────────── */
 #timer-screen {
-  justify-content: flex-start;
-  padding-top: 2rem;
+  justify-content: center;
   gap: 0;
 }
 
