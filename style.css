@@ -65,7 +65,7 @@ html, body {
 
 .flame-layer {
   position: absolute;
-  bottom: 0;
+  bottom: 82px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
@@ -79,18 +79,47 @@ html, body {
 .fl2 { width: 44px; height: calc(var(--flame-h) * .75); background: radial-gradient(ellipse at 50% 80%, #fff3a0 0%, #ffb830 50%, #ff6010 85%, transparent 100%); animation: flicker2 calc(var(--flame-speed) * .8) ease-in-out infinite; }
 .fl3 { width: 28px; height: calc(var(--flame-h) * .5); background: radial-gradient(ellipse at 50% 85%, #fffde0 0%, #ffd060 60%, transparent 100%); animation: flicker3 calc(var(--flame-speed) * 1.2) ease-in-out infinite; }
 
-/* wick */
-.wick {
+/* wick stub (glowing tip above head) */
+.torch-head {
   position: absolute;
-  bottom: -4px; left: 50%;
+  bottom: 58px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 4px; height: 18px;
-  background: #2e2418;
-  border-radius: 2px;
+  width: 22px;
+  height: 26px;
+  background: linear-gradient(to bottom,
+    #1a0e06 0%,
+    #3a2818 30%,
+    #2c1e0e 60%,
+    #1a1008 100%
+  );
+  border-radius: 3px 3px 1px 1px;
+  box-shadow:
+    inset 1px 0 2px rgba(90,50,10,.4),
+    inset -1px 0 2px rgba(90,50,10,.4),
+    0 0 8px rgba(140,80,20,.25);
+}
+
+/* wooden shaft */
+.torch-shaft {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 62px;
+  background: linear-gradient(to right,
+    #1e1208 0%,
+    #4a3020 25%,
+    #5c3e26 50%,
+    #4a3020 75%,
+    #1e1208 100%
+  );
+  border-radius: 2px 2px 4px 4px;
 }
 
 /* ── Ember sparks ─────────────────────────────────────────── */
-.embers { position: absolute; bottom: 28px; left: 50%; width: 0; height: 0; }
+.embers { position: absolute; bottom: 110px; left: 50%; width: 0; height: 0; }
 .ember {
   position: absolute;
   width: 2px; height: 2px;
