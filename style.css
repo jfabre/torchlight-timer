@@ -13,8 +13,8 @@
 
 html, body {
   width: 100%; height: 100%;
-  background: #000;
-  color: #f0f0f0;
+  background: #0a0806;
+  color: #e0ddd4;
   font-family: 'IM Fell English', serif;
   overflow: hidden;
   user-select: none;
@@ -25,13 +25,13 @@ html, body {
 .screen.hidden { opacity: 0; pointer-events: none; }
 
 /* ── Menu ─────────────────────────────────────────────────── */
-#menu h1 { font-size: 2.4rem; letter-spacing: .08em; color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.35); margin-bottom: .5rem; }
-#menu p  { font-size: 1rem; color: #888; font-style: italic; margin-top: -.8rem; }
+#menu h1 { font-size: 2.4rem; letter-spacing: .08em; color: #ede8dc; text-shadow: 0 0 24px rgba(220,180,100,.2), 0 0 50px rgba(180,120,40,.1); margin-bottom: .5rem; }
+#menu p  { font-size: 1rem; color: #5a5040; font-style: italic; margin-top: -.8rem; }
 
 .menu-btn {
   background: transparent;
-  border: 1px solid #555;
-  color: #ddd;
+  border: 1px solid #3a3020;
+  color: #b0a880;
   font-family: inherit;
   font-size: 1.3rem;
   padding: .65rem 2.2rem;
@@ -39,7 +39,7 @@ html, body {
   letter-spacing: .06em;
   transition: border-color .2s, color .2s, box-shadow .2s;
 }
-.menu-btn:hover { border-color: #ccc; color: #fff; box-shadow: 0 0 12px rgba(255,255,255,.15); }
+.menu-btn:hover { border-color: #908060; color: #ede8dc; box-shadow: 0 0 12px rgba(180,160,100,.15); }
 
 /* ── Timer screen ─────────────────────────────────────────── */
 #timer-screen {
@@ -75,9 +75,9 @@ html, body {
   transition: height .8s ease, opacity .8s ease;
 }
 
-.fl1 { width: 60px; height: var(--flame-h); background: #fff; animation: flicker1 var(--flame-speed) ease-in-out infinite; }
-.fl2 { width: 44px; height: calc(var(--flame-h) * .75); background: #e8e8e8; animation: flicker2 calc(var(--flame-speed) * .8) ease-in-out infinite; }
-.fl3 { width: 28px; height: calc(var(--flame-h) * .5); background: #c8c8c8; animation: flicker3 calc(var(--flame-speed) * 1.2) ease-in-out infinite; }
+.fl1 { width: 60px; height: var(--flame-h); background: radial-gradient(ellipse at 50% 80%, #fffde0 0%, #ffd060 40%, #ff8c20 75%, transparent 100%); animation: flicker1 var(--flame-speed) ease-in-out infinite; }
+.fl2 { width: 44px; height: calc(var(--flame-h) * .75); background: radial-gradient(ellipse at 50% 80%, #fff3a0 0%, #ffb830 50%, #ff6010 85%, transparent 100%); animation: flicker2 calc(var(--flame-speed) * .8) ease-in-out infinite; }
+.fl3 { width: 28px; height: calc(var(--flame-h) * .5); background: radial-gradient(ellipse at 50% 85%, #fffde0 0%, #ffd060 60%, transparent 100%); animation: flicker3 calc(var(--flame-speed) * 1.2) ease-in-out infinite; }
 
 /* wick */
 .wick {
@@ -85,8 +85,30 @@ html, body {
   bottom: -4px; left: 50%;
   transform: translateX(-50%);
   width: 4px; height: 18px;
-  background: #555;
+  background: #2e2418;
   border-radius: 2px;
+}
+
+/* ── Ember sparks ─────────────────────────────────────────── */
+.embers { position: absolute; bottom: 28px; left: 50%; width: 0; height: 0; }
+.ember {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: #ff8030;
+  box-shadow: 0 0 3px 1px rgba(255,120,30,.6);
+  animation: ember-rise 2.8s ease-out infinite;
+  opacity: 0;
+}
+.ember:nth-child(1) { animation-delay: 0s;   left: -6px;  --edx: -10px; }
+.ember:nth-child(2) { animation-delay: 1.1s; left:  6px;  --edx:  14px; }
+.ember:nth-child(3) { animation-delay: 2.0s; left: -10px; --edx:  -6px; width: 1px; height: 1px; }
+
+@keyframes ember-rise {
+  0%   { opacity: 0;   transform: translate(0, 0) scale(1); }
+  15%  { opacity: .8; }
+  80%  { opacity: .15; }
+  100% { opacity: 0;   transform: translate(var(--edx), -90px) scale(.2); }
 }
 
 @keyframes flicker1 {
@@ -127,10 +149,10 @@ html, body {
 .staff-orb {
   width: 50px; height: 50px;
   border-radius: 50%;
-  background: #fff;
+  background: radial-gradient(circle, #ffffff 0%, #fff8f0 40%, #f0e0c0 80%, #d4b870 100%);
   box-shadow:
-    0 0 var(--glow-size) calc(var(--glow-size) * .4) rgba(255,255,255,.9),
-    0 0 calc(var(--glow-size) * 2) calc(var(--glow-size) * .8) rgba(255,255,255,.4);
+    0 0 var(--glow-size) calc(var(--glow-size) * .4) rgba(255,255,240,.85),
+    0 0 calc(var(--glow-size) * 2) calc(var(--glow-size) * .8) rgba(240,210,140,.25);
   opacity: var(--glow-opacity);
   animation: pulse var(--glow-speed) ease-in-out infinite;
   transition: opacity .8s, box-shadow .8s, width .4s, height .4s;
@@ -151,14 +173,14 @@ html, body {
 #time-display {
   font-size: 3rem;
   letter-spacing: .12em;
-  color: #fff;
-  text-shadow: 0 0 20px rgba(255,255,255,.3);
+  color: #ede8dc;
+  text-shadow: 0 0 18px rgba(210,180,100,.2);
   margin: .5rem 0;
 }
 
 #mode-label {
   font-size: .9rem;
-  color: #666;
+  color: #5a5040;
   font-style: italic;
   letter-spacing: .1em;
   text-transform: lowercase;
@@ -169,7 +191,7 @@ html, body {
 #controls {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,.92) 40%);
+  background: linear-gradient(transparent, rgba(10,8,6,.95) 40%);
   padding: 2.5rem 1rem 1.2rem;
   display: flex;
   flex-direction: column;
@@ -183,8 +205,8 @@ html, body {
 
 .ctrl-btn {
   background: transparent;
-  border: 1px solid #444;
-  color: #ccc;
+  border: 1px solid #2e2818;
+  color: #a09870;
   font-family: inherit;
   font-size: .95rem;
   padding: .35rem .85rem;
@@ -193,8 +215,8 @@ html, body {
   letter-spacing: .04em;
   min-width: 44px;
 }
-.ctrl-btn:hover { border-color: #aaa; color: #fff; }
-.ctrl-btn.primary { border-color: #888; font-size: 1.1rem; padding: .4rem 1.2rem; }
+.ctrl-btn:hover { border-color: #80704a; color: #ede8dc; }
+.ctrl-btn.primary { border-color: #504030; color: #c0b080; font-size: 1.1rem; padding: .4rem 1.2rem; }
 
 /* ── Dark overlay (after extinguish) ──────────────────────── */
 #darkness {
@@ -209,14 +231,14 @@ html, body {
 /* ── Stop confirm modal ───────────────────────────────────── */
 #stop-confirm {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,.85);
+  background: rgba(10,8,6,.88);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
   font-size: 1.1rem;
-  color: #ddd;
+  color: #c8c0a8;
 }
 #stop-confirm.hidden { display: none; }
 #stop-confirm .confirm-row { display: flex; gap: 1rem; }
