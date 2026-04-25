@@ -2,7 +2,7 @@
 
 A [TaleSpire Symbiote](https://symbiote-docs.talespire.com/) that wraps the [Torchlight Timer](https://torchlighttimer.com) — an animated countdown timer for torches and light spells in TTRPGs.
 
-![Version](https://img.shields.io/badge/version-0.5.1-orange)
+![Version](https://img.shields.io/badge/version-0.5.2-orange)
 ![Platform](https://img.shields.io/badge/platform-TaleSpire-blue)
 ![License](https://img.shields.io/badge/license-personal%20use-lightgrey)
 
