@@ -1,9 +1,9 @@
 {
   "manifestVersion": 1,
   "name": "Torchlight Timer",
-  "description": "An animated countdown timer for torches and light spells in TTRPGs, powered by torchlighttimer.com",
-  "entryPoint": "https://torchlighttimer.com",
-  "version": "1.0.0",
+  "description": "An animated countdown timer for torches and light spells in TTRPGs.",
+  "entryPoint": "/index.html",
+  "version": "0.5.0",
   "environment": {
     "loadTargetBehavior": "popup"
   },

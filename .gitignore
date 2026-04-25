@@ -19,3 +19,4 @@ witness/
 config.json
 state.json
 AGENTS.md
+.DS_Store

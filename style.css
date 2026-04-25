@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --flame-h: 120px;
+  --flame-opacity: 1;
+  --flame-speed: 1s;
+  --glow-size: 60px;
+  --glow-opacity: 1;
+  --glow-speed: 2s;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #000;
+  color: #f0f0f0;
+  font-family: 'IM Fell English', serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── Screens ─────────────────────────────────────────────── */
+.screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; transition: opacity .5s; }
+.screen.hidden { opacity: 0; pointer-events: none; }
+
+/* ── Menu ─────────────────────────────────────────────────── */
+#menu h1 { font-size: 2.4rem; letter-spacing: .08em; color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.35); margin-bottom: .5rem; }
+#menu p  { font-size: 1rem; color: #888; font-style: italic; margin-top: -.8rem; }
+
+.menu-btn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #ddd;
+  font-family: inherit;
+  font-size: 1.3rem;
+  padding: .65rem 2.2rem;
+  cursor: pointer;
+  letter-spacing: .06em;
+  transition: border-color .2s, color .2s, box-shadow .2s;
+}
+.menu-btn:hover { border-color: #ccc; color: #fff; box-shadow: 0 0 12px rgba(255,255,255,.15); }
+
+/* ── Timer screen ─────────────────────────────────────────── */
+#timer-screen {
+  justify-content: flex-start;
+  padding-top: 2rem;
+  gap: 0;
+}
+
+/* ── Flame ────────────────────────────────────────────────── */
+#flame-container {
+  position: relative;
+  width: 120px;
+  height: 200px;
+  margin: 1rem auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.flame-base { position: absolute; bottom: 0; }
+
+/* SVG filter for organic distortion */
+#flame-filter { position: absolute; width: 0; height: 0; }
+
+.flame-layer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+  transform-origin: center bottom;
+  filter: url(#fl);
+  opacity: var(--flame-opacity);
+  transition: height .8s ease, opacity .8s ease;
+}
+
+.fl1 { width: 60px; height: var(--flame-h); background: #fff; animation: flicker1 var(--flame-speed) ease-in-out infinite; }
+.fl2 { width: 44px; height: calc(var(--flame-h) * .75); background: #e8e8e8; animation: flicker2 calc(var(--flame-speed) * .8) ease-in-out infinite; }
+.fl3 { width: 28px; height: calc(var(--flame-h) * .5); background: #c8c8c8; animation: flicker3 calc(var(--flame-speed) * 1.2) ease-in-out infinite; }
+
+/* wick */
+.wick {
+  position: absolute;
+  bottom: -4px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 18px;
+  background: #555;
+  border-radius: 2px;
+}
+
+@keyframes flicker1 {
+  0%,100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(-1deg); }
+  25%      { transform: translateX(-50%) scaleX(.92) scaleY(1.05) rotate(1.5deg); }
+  50%      { transform: translateX(-50%) scaleX(1.04) scaleY(.97) rotate(-.5deg); }
+  75%      { transform: translateX(-50%) scaleX(.96) scaleY(1.03) rotate(1deg); }
+}
+@keyframes flicker2 {
+  0%,100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(.5deg); }
+  33%      { transform: translateX(-50%) scaleX(.88) scaleY(1.08) rotate(-2deg); }
+  66%      { transform: translateX(-50%) scaleX(1.06) scaleY(.93) rotate(1deg); }
+}
+@keyframes flicker3 {
+  0%,100% { transform: translateX(-50%) scaleX(1) scaleY(1) rotate(0deg); }
+  20%      { transform: translateX(-50%) scaleX(.94) scaleY(1.1) rotate(2deg); }
+  60%      { transform: translateX(-50%) scaleX(1.08) scaleY(.9) rotate(-1.5deg); }
+}
+
+/* Intensity states */
+.state-full  { --flame-h: 120px; --flame-opacity: 1;   --flame-speed: 1.2s; }
+.state-mid   { --flame-h:  85px; --flame-opacity: .85; --flame-speed: 1.6s; }
+.state-low   { --flame-h:  50px; --flame-opacity: .6;  --flame-speed: 2.2s; }
+.state-igniting, .state-extinguishing { --flame-h: 30px; --flame-opacity: .4; --flame-speed: .6s; }
+.state-dark  { --flame-opacity: 0; }
+
+/* ── Staff glow ───────────────────────────────────────────── */
+#glow-container {
+  position: relative;
+  width: 120px;
+  height: 200px;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.staff-orb {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 var(--glow-size) calc(var(--glow-size) * .4) rgba(255,255,255,.9),
+    0 0 calc(var(--glow-size) * 2) calc(var(--glow-size) * .8) rgba(255,255,255,.4);
+  opacity: var(--glow-opacity);
+  animation: pulse var(--glow-speed) ease-in-out infinite;
+  transition: opacity .8s, box-shadow .8s, width .4s, height .4s;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.08); }
+}
+
+.glow-state-igniting { --glow-size: 10px; --glow-opacity: .3; --glow-speed: .5s; }
+.glow-state-glowing  { --glow-size: 60px; --glow-opacity: 1;  --glow-speed: 2.2s; }
+.glow-state-dim      { --glow-size: 25px; --glow-opacity: .5; --glow-speed: 3.5s; }
+.glow-state-extinguishing { --glow-size: 8px; --glow-opacity: .2; --glow-speed: .4s; }
+.glow-state-dark     { --glow-opacity: 0; }
+
+/* ── Timer display ────────────────────────────────────────── */
+#time-display {
+  font-size: 3rem;
+  letter-spacing: .12em;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255,255,255,.3);
+  margin: .5rem 0;
+}
+
+#mode-label {
+  font-size: .9rem;
+  color: #666;
+  font-style: italic;
+  letter-spacing: .1em;
+  text-transform: lowercase;
+  margin-bottom: .2rem;
+}
+
+/* ── Controls overlay ─────────────────────────────────────── */
+#controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,.92) 40%);
+  padding: 2.5rem 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .7rem;
+  transition: opacity .3s;
+}
+#controls.hidden { opacity: 0; pointer-events: none; }
+
+.ctrl-row { display: flex; gap: .6rem; align-items: center; }
+
+.ctrl-btn {
+  background: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  font-family: inherit;
+  font-size: .95rem;
+  padding: .35rem .85rem;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+  letter-spacing: .04em;
+  min-width: 44px;
+}
+.ctrl-btn:hover { border-color: #aaa; color: #fff; }
+.ctrl-btn.primary { border-color: #888; font-size: 1.1rem; padding: .4rem 1.2rem; }
+
+/* ── Dark overlay (after extinguish) ──────────────────────── */
+#darkness {
+  position: absolute; inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s ease;
+}
+#darkness.visible { opacity: 1; }
+
+/* ── Stop confirm modal ───────────────────────────────────── */
+#stop-confirm {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  font-size: 1.1rem;
+  color: #ddd;
+}
+#stop-confirm.hidden { display: none; }
+#stop-confirm .confirm-row { display: flex; gap: 1rem; }

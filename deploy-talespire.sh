@@ -7,6 +7,9 @@ DEST="$HOME/Library/Application Support/com.bouncyrock.talespire/Symbiotes/torch
 
 mkdir -p "$DEST"
 cp "$SRC/manifest.json" "$DEST/"
+cp "$SRC/index.html"    "$DEST/"
+cp "$SRC/style.css"     "$DEST/"
+cp "$SRC/script.js"     "$DEST/"
 
 echo "✓ Deployed to: $DEST"
 ls -lh "$DEST"
