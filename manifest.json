@@ -1,0 +1,15 @@
+{
+  "manifestVersion": 1,
+  "name": "Torchlight Timer",
+  "description": "An animated countdown timer for torches and light spells in TTRPGs, powered by torchlighttimer.com",
+  "entryPoint": "https://torchlighttimer.com",
+  "version": "1.0.0",
+  "environment": {
+    "loadTargetBehavior": "popup"
+  },
+  "about": {
+    "authors": [
+      "Jeremy Fabre"
+    ]
+  }
+}
