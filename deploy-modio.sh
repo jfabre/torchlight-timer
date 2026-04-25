@@ -96,7 +96,7 @@ git tag "v$NEW_VERSION"
 # ── Zip ─────────────────────────────────────────────────
 mkdir -p dist
 ZIP_NAME="torchlight-timer-v$NEW_VERSION.zip"
-zip -j "dist/$ZIP_NAME" manifest.json README.md CHANGELOG.md
+zip -j "dist/$ZIP_NAME" manifest.json index.html style.css script.js README.md CHANGELOG.md
 
 echo ""
 echo "═══════════════════════════════════════════════════"
