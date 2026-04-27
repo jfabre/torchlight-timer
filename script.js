@@ -195,8 +195,11 @@
     showControls();
   });
 
+  let wasRunning = false;
+
   btnStop.addEventListener('click', (e) => {
     e.stopPropagation();
+    wasRunning = running;
     stopConfirm.classList.remove('hidden');
     stopTick();
   });
@@ -210,9 +213,13 @@
 
   btnCancelStop.addEventListener('click', () => {
     stopConfirm.classList.add('hidden');
-    running = true;
-    renderPlayButton();
-    startTick();
+    if (wasRunning) {
+      running = true;
+      renderPlayButton();
+      startTick();
+    } else {
+      renderPlayButton();
+    }
   });
 
   btnMinus5.addEventListener('click', (e) => { e.stopPropagation(); adjustTime(-300); showControls(); });
