@@ -215,9 +215,9 @@
     startTick();
   });
 
-  btnMinus5.addEventListener('click', (e) => { e.stopPropagation(); speedAdjust(-1); showControls(); });
+  btnMinus5.addEventListener('click', (e) => { e.stopPropagation(); adjustTime(-300); showControls(); });
   btnMinus1.addEventListener('click', (e) => { e.stopPropagation(); adjustTime(-60);  showControls(); });
   btnPlus1.addEventListener('click',  (e) => { e.stopPropagation(); adjustTime(60);   showControls(); });
-  btnPlus5.addEventListener('click',  (e) => { e.stopPropagation(); speedAdjust(1);   showControls(); });
+  btnPlus5.addEventListener('click',  (e) => { e.stopPropagation(); adjustTime(300);  showControls(); });
 
 })();
