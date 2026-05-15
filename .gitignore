@@ -21,3 +21,8 @@ state.json
 AGENTS.md
 CLAUDE.md
 .DS_Store
+
+# Gas Town (added by gt)
+.logs/
+__pycache__/
+CLAUDE.local.md
