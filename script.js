@@ -5,6 +5,7 @@
   const STAFF_DURATION = 60 * 60;
   const SPEED_UP_THRESHOLD = 10;
   const SPEED_UP_RESET_MS = 2000;
+  const STORAGE_KEY = 'torchlight_state';
 
   // ── State ────────────────────────────────────────────────────────
   let mode = null;        // 'torch' | 'staff'
@@ -38,6 +39,16 @@
   const btnPlus5   = document.getElementById('btn-plus5');
   const btnConfirmStop   = document.getElementById('btn-confirm-stop');
   const btnCancelStop    = document.getElementById('btn-cancel-stop');
+  const btnResume        = document.getElementById('btn-resume');
+
+  // ── localStorage persistence ─────────────────────────────────────
+  function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ mode, remaining }));
+  }
+
+  function clearState() {
+    localStorage.removeItem(STORAGE_KEY);
+  }
 
   // ── Torch state machine ──────────────────────────────────────────
   // 0=igniting 1=full 2=mid 3=low 4=extinguishing 5=dark
@@ -91,6 +102,7 @@
   function onExtinguished() {
     if (extinguished) return;
     extinguished = true;
+    clearState();
     stopTick();
     darkness.classList.add('visible');
     setTimeout(() => location.reload(), 5000);
@@ -104,6 +116,7 @@
       remaining = Math.max(0, remaining - 1);
       renderTimer();
       renderState();
+      saveState();
     }, 1000);
   }
 
@@ -118,6 +131,7 @@
     remaining = Math.max(0, Math.min(totalSeconds * 3, remaining + deltaSec));
     renderTimer();
     renderState();
+    saveState();
   }
 
   function speedAdjust(direction) {
@@ -152,6 +166,7 @@
 
   // ── Boot mode ────────────────────────────────────────────────────
   function startMode(m) {
+    clearState();
     mode = m;
     totalSeconds = m === 'torch' ? TORCH_DURATION : STAFF_DURATION;
     remaining = totalSeconds;
@@ -191,6 +206,7 @@
     e.stopPropagation();
     running = !running;
     if (running) startTick();
+    else saveState();
     renderPlayButton();
     showControls();
   });
@@ -206,6 +222,7 @@
 
   btnConfirmStop.addEventListener('click', () => {
     stopConfirm.classList.add('hidden');
+    clearState();
     remaining = 0;
     renderTimer();
     renderState();
@@ -226,5 +243,48 @@
   btnMinus1.addEventListener('click', (e) => { e.stopPropagation(); adjustTime(-60);  showControls(); });
   btnPlus1.addEventListener('click',  (e) => { e.stopPropagation(); adjustTime(60);   showControls(); });
   btnPlus5.addEventListener('click',  (e) => { e.stopPropagation(); adjustTime(300);  showControls(); });
+
+  // ── Resume saved session ─────────────────────────────────────────
+  function resumeMode(state) {
+    mode = state.mode;
+    totalSeconds = mode === 'torch' ? TORCH_DURATION : STAFF_DURATION;
+    remaining = Math.max(1, Math.min(totalSeconds * 3, state.remaining));
+    extinguished = false;
+    running = false;
+
+    modeLabel.textContent = mode === 'torch' ? 'torch' : 'light spell';
+    menuScreen.classList.add('hidden');
+    timerScreen.classList.remove('hidden');
+
+    flameContainer.style.display = mode === 'torch' ? 'flex' : 'none';
+    glowContainer.style.display  = mode === 'staff'  ? 'flex' : 'none';
+
+    renderTimer();
+    renderState();
+    renderPlayButton();
+    showControls();
+  }
+
+  function checkResumable() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      if (!state.mode || !state.remaining || state.remaining <= 0) {
+        clearState();
+        return;
+      }
+      const m = Math.floor(state.remaining / 60);
+      const s = state.remaining % 60;
+      const label = state.mode === 'torch' ? 'torch' : 'light spell';
+      btnResume.textContent = `▶ Resume ${label} (${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')})`;
+      btnResume.classList.remove('hidden');
+      btnResume.addEventListener('click', () => resumeMode(state));
+    } catch (e) {
+      clearState();
+    }
+  }
+
+  checkResumable();
 
 })();
