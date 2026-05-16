@@ -2,7 +2,7 @@
 
 A native [TaleSpire Symbiote](https://symbiote-docs.talespire.com/) — an animated countdown timer for torches and light spells in Shadowdark.
 
-![Version](https://img.shields.io/badge/version-0.5.2-orange)
+![Version](https://img.shields.io/badge/version-0.6.0-orange)
 ![Platform](https://img.shields.io/badge/platform-TaleSpire-blue)
 ![License](https://img.shields.io/badge/license-personal%20use-lightgrey)
 
